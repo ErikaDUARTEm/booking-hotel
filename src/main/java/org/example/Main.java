@@ -13,6 +13,7 @@ public class Main {
 
             switch (opcion) {
                 case 1 -> printDetailsHotels();
+                case 2 -> searchAvailableAccommodations();
                 case 4 -> {
                     System.out.println("Saliendo...");
                     return;
@@ -49,9 +50,10 @@ public class Main {
                 castilloResort.put("city", "San Gil, Santander");
                 castilloResort.put("description", "Hotel Castillo Resort se encuentra en San Gil, a 42 km de Chicamocha National Park, y ofrece alojamiento con piscina al aire libre, parking privado gratis, jardín y salón de uso común.");
                 castilloResort.put("typeOfAccommodation", Map.of( "Pasadía", 20, "Estadia por noche", 30));
+                // 15/12/2024, al  15/01/2025
                 castilloResort.put("availability", Map.of(
-                                "start", LocalDate.of(2024, 12, 15),
-                                "end", LocalDate.of(2025, 1, 15)));
+                                "start", 19110,
+                                "end", 19145));
                 castilloResort.put("price", 60.0);
                 castilloResort.put("rooms", Map.of(
                         "single room", 2,
@@ -67,9 +69,10 @@ public class Main {
                 mesonDeCuchicute.put("city", "San Gil, Santander");
                 mesonDeCuchicute.put("description", "60 confortables habitaciones, 13 confortables cabañas, 2 cabañas dúplex, zona de camping, TV por cable, cajillas de seguridad, mini bar, Wifi, room service, restaurante, taberna, bar, piscinas.");
                 mesonDeCuchicute.put("typeOfAccommodation", "Estadia por noche");
+                // 15/01/2025 al 30/01/2025
                 mesonDeCuchicute.put("availability", Map.of(
-                                "start", LocalDate.of(2025, 1, 15),
-                                "end", LocalDate.of(2025, 1, 30)));
+                                "start", 19218,
+                                "end", 19233));
                 mesonDeCuchicute.put("price", 150.0);
                 mesonDeCuchicute.put("rooms", Map.of(
                         "single room", 3,
@@ -87,9 +90,10 @@ public class Main {
                 fincaSolYLuna.put("city", "San Gil");
                 fincaSolYLuna.put("description", "Finca Sol y Luna se encuentra en San Gil, en la región de Santander, a 47 km de Chicamocha National Park. Ofrece alojamiento con wifi gratis, zona de barbacoa, piscina al aire libre y parking privado gratis. Algunas unidades incluyen TV de pantalla plana por cable, cocina totalmente equipada con nevera y baño privado con ducha y artículos de aseo gratuitos.");
                 fincaSolYLuna.put("typeOfAccommodation", "Finca (fines de semana)");
+                //Inicio: 01/02/2025, Fin: 15/03/2025
                 fincaSolYLuna.put("availability", Map.of(
-                        "start", LocalDate.of(2025, 2, 1),
-                        "end", LocalDate.of(2025, 3, 15)));
+                        "start", 19232,
+                        "end", 19277));
                 fincaSolYLuna.put("price", 350.0);
                 fincaSolYLuna.put("rooms", Map.of(
                         "single room", 1,
@@ -105,9 +109,11 @@ public class Main {
                 aptoSanGilPlaza.put("city", "San Gil");
                 aptoSanGilPlaza.put("description", "Hermoso Apto - C.C San Gil Plaza está en San Gil, dispone de vistas a la ciudad y wifi gratis.");
                 aptoSanGilPlaza.put("typeOfAccommodation", "Apartamento");
+                /* 15 de diciembre de 2024 al 1 de enero de 2025*/
                 aptoSanGilPlaza.put("availability", Map.of(
-                        "start", LocalDate.of(2024, 12, 15),
-                        "end", LocalDate.of(2025, 1, 30)));
+                        "start", 19010,
+                        "end", 19025
+                ));
                 aptoSanGilPlaza.put("price", 70.0);
                 aptoSanGilPlaza.put("rooms", Map.of(
                         "single room", 1,
@@ -124,9 +130,11 @@ public class Main {
                 aptahotelGuestHouse.put("city", "San Gil");
                 aptahotelGuestHouse.put("description", "Aptahotel Guest House está en San Gil, a 41 km de Chicamocha National Park y a 41 km de Chicamocha Water Park.");
                 aptahotelGuestHouse.put("typeOfAccommodation", "Apartamento");
+                // 05/06/2025 a  30/07/2025
                 aptahotelGuestHouse.put("availability", Map.of(
-                        "start", LocalDate.of(2025, 6, 5),
-                        "end", LocalDate.of(2025, 7, 15)));
+                        "start", 19217,
+                        "end", 19306
+                ));
                 aptahotelGuestHouse.put("price", 90.0);
                 aptahotelGuestHouse.put("rooms", Map.of(
                         "single room", 1,
@@ -138,4 +146,12 @@ public class Main {
 
                 return hotels;
             }
+            public static List<Map<String, Object>> searchAvailableAccommodations(
+                   String city,
+                   typeOfAccommodation, startDate, endDate, numberOfAdults, numberOfChildren, numberOfRooms
+                    ){
+
+
+            }
+
 }
