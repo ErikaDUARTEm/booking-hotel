@@ -229,7 +229,21 @@ public class Main {
 
                     hotel.put("capacity", totalCapacity);
 
-                   
+                    // Cálculo del precio
+                    double priceNight = (double) hotel.get("price");
+                    int daysOfStay = endDate - startDate;
+
+                    double totalPrice = priceNight * daysOfStay * numberOfRooms;
+
+                    if (endDate >= hotelStartDate && endDate <= hotelEndDate) {
+                        totalPrice *= 1.15; // 15% de aumento para los últimos 5 días
+                    } else if (startDate >= hotelStartDate && startDate <= hotelEndDate) {
+                        totalPrice *= 1.10; // 10% de aumento del 10 al 15 del mes
+                    } else if (startDate >= hotelStartDate + 5 && endDate <= hotelStartDate + 10) {
+                        totalPrice *= 0.92; // 8% de descuento del 5 al 10 del mes
+                    }
+
+                    hotel.put("totalPrice", totalPrice);
                     availableHotels.add(hotel);
                 }
             }
