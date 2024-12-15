@@ -446,7 +446,6 @@ public class Main {
         int daysMonth = 30;
         return year * 365 + month * daysMonth + day;
     }
-
     public static String confirmRooms(String hotelName, int checkIn, int checkOut, int numbersAdults, int numbersChildrens, int roomsRequested) {
 
         Object[] allHotels = listOfHotels();
@@ -470,36 +469,38 @@ public class Main {
         int hotelStartDate = (int) selectedHotel[4];
         int hotelEndDate = (int) selectedHotel[5];
         int availableRooms = (int) selectedHotel[7];
-        int maxCapacityPerRoom = 0;
+
+        if (checkIn < hotelStartDate || checkOut > hotelEndDate) {
+            return "Las fechas están fuera del rango de disponibilidad del hotel.";
+        }
 
         Object[] rooms = (Object[]) selectedHotel[9];
+        System.out.println("****************** Confirmación de Habitaciones **********************");
+
         for (Object room : rooms) {
             Object[] roomDetails = (Object[]) room;
-            int roomCapacity = (int) roomDetails[1];
-            if (roomCapacity > maxCapacityPerRoom) {
-                maxCapacityPerRoom = roomCapacity;
+
+            int roomCapacity = (int) roomDetails[1]; // Capacidad de la habitación
+            int totalCapacityNeeded = numbersAdults + numbersChildrens;
+
+            if (roomCapacity >= totalCapacityNeeded) {
+                System.out.println("Tipo de habitación: " + roomDetails[0]);
+                System.out.println("Características: " + roomDetails[3]);
+                System.out.println("Precio por noche: " + roomDetails[2]);
+                System.out.println();
             }
         }
 
-        if (checkIn >= hotelStartDate && checkOut <= hotelEndDate) {
-
-            if (roomsRequested <= availableRooms && roomsRequested * maxCapacityPerRoom >= numbersAdults + numbersChildrens) {
-                System.out.println("****************** Habitaciones confirmadas **********************");
-                System.out.println();
-                System.out.println("Cantidad " + roomsRequested + " habitaciones.");
-                System.out.println("Ingreso: " + hotelStartDate);
-                System.out.println("Salida: " + hotelEndDate);
-                System.out.println("Para: " + (numbersAdults + numbersChildrens) + " personas.");
-                System.out.println("*******************************************************************");
-                return "Habitación confirmada con éxito.";
-
-            } else {
-                System.out.println("No hay suficiente disponibilidad de habitaciones o capacidad");
-                return "No hay suficiente disponibilidad de habitaciones o capacidad";
-            }
+        if (roomsRequested <= availableRooms) {
+            System.out.println("Cantidad " + roomsRequested + " habitaciones.");
+            System.out.println("Ingreso: " + hotelStartDate);
+            System.out.println("Salida: " + hotelEndDate);
+            System.out.println("Para: " + (numbersAdults + numbersChildrens) + " personas.");
+            System.out.println("***********************************************************************");
+            return "Habitación(s) confirmada(s) con éxito.";
         } else {
-            System.out.println("Las fechas están fuera del rango de disponibilidad del hotel.");
-            return "Las fechas están fuera del rango de disponibilidad del hotel.";
+            System.out.println("No hay suficiente disponibilidad de habitaciones.");
+            return "No hay suficiente disponibilidad de habitaciones.";
         }
     }
 
