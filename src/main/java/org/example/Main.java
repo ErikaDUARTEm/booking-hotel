@@ -61,132 +61,174 @@ public class Main {
     }
 
     public static void printDetailsHotels() {
-        // Llamar al método listaDeHoteles
-        List<Map<String, Object>> hotels = listOfHotels();
 
-        // Mostrar la información de los hoteles
-        hotels.forEach(hotel -> {
-            System.out.println("***********************************");
-            System.out.println("Nombre del hotel: " + hotel.get("name"));
-            System.out.println("Calificación: " + hotel.get("rating"));
-            System.out.println("Ciudad: " + hotel.get("city"));
-            System.out.println("Descripcion: " + hotel.get("description"));
-            System.out.println("Disponibilidad a partir de : " + hotel.get("startDate"));
-            System.out.println("Disponibilidad hasta: " + hotel.get("endDate"));
+        Object[] hotels = listOfHotels();
 
-            System.out.println("Precio: $" + hotel.get("price"));
-            System.out.println("Habitaciones disponibles: " + hotel.get("rooms"));
-            System.out.println("***********************************");
-        });
+        for (Object hotel : hotels) {
+            if (hotel instanceof Object[]) {
+                Object[] hotelData = (Object[]) hotel;
+
+                System.out.println("***********************************");
+                System.out.println("Nombre del hotel: " + hotelData[0]);
+                System.out.println("Calificación: " + hotelData[1]);
+                System.out.println("Ciudad: " + hotelData[2]);
+                System.out.println("Descripción: " + hotelData[3]);
+                System.out.println("Disponibilidad a partir de: " + hotelData[4]);
+                System.out.println("Disponibilidad hasta: " + hotelData[5]);
+                System.out.println("Precio: $" + hotelData[6]);
+                System.out.println("Habitaciones disponibles: " + hotelData[7]);
+                System.out.println("***********************************");
+                System.out.println("Nombre del hotel: " + hotelData[0]);
+                System.out.println("Calificación: " + hotelData[1]);
+                System.out.println("Ciudad: " + hotelData[2]);
+                System.out.println("Descripción: " + hotelData[3]);
+                System.out.println("Disponibilidad a partir de: " + hotelData[4]);
+                System.out.println("Disponibilidad hasta: " + hotelData[5]);
+                System.out.println("Precio base: $" + hotelData[6]);
+                System.out.println("Habitaciones disponibles: " + hotelData[7]);
+                System.out.println("Tipo de alojamiento: " + hotelData[8]);
+
+                // Tipos de habitaciones
+                System.out.println("Tipos de alojamiento:");
+                Object[] roomTypes = (Object[]) hotelData[9];
+                for (Object room : roomTypes) {
+                    if (room instanceof Object[] roomData) {
+                        System.out.println("  - Tipo: " + roomData[0]);
+                        System.out.println("    Capacidad: " + roomData[1] + " personas");
+                        System.out.println("    Precio adicional: $" + roomData[2]);
+                        System.out.println("    Descripción: " + roomData[3]);
+                    }
+                }
+
+                System.out.println("***********************************");
+            }
+        }
     }
 
-    public static List<Map<String, Object>> listOfHotels() {
-        List<Map<String, Object>> hotels = new ArrayList<>();
+        public static Object[] listOfHotels() {
+            Object[] hotels = new Object[5];
+            hotels[0] = new Object[]{
+                    "Hotel Castillo Resort",
+                    4.5,
+                    "San Gil",
+                    "Hotel Castillo Resort se encuentra en San Gil, a 42 km de Chicamocha National Park...",
+                    "2024-12-15",
+                    "2025-01-30",
+                    60.0,
+                    16,
+                    "Hotel",
+                    new Object[]{
+                            new Object[]{"single room", 2, 10.0, "cama individual, aire acondicionado, baño privado"},
+                            new Object[]{"double room", 6, 25.0, "2 camas dobles, vista a la piscina, aire acondicionado, baño privado"},
+                            new Object[]{"quadruple room", 1, 40.0, "4 camas, vista al jardín, aire acondicionado, baño privado, minibar"},
+                            new Object[]{"family room", 5, 35.0, "4 camas matrimoniales, sala de estar, aire acondicionado, baño privado"},
+                            new Object[]{"suite", 3, 50.0, "cama king size, sala de estar, jacuzzi, aire acondicionado, baño privado"}
+                    },
+                    new Object[]{
+                            new Object[]{"Estadía por noche", 150.0, "Habitación equipada con servicios básicos como Wi-Fi, aire acondicionado, baño privado."},
+                            new Object[]{"Estadía por fines de semana", 350.0, "Ofrece servicios como desayuno buffet, acceso a piscina y uso de áreas comunes."},
+                            new Object[]{"Pasadía", 50.0, "Acceso por un día con servicios básicos y acceso a áreas comunes."}
+                    }
+            };
 
-        Map<String, Object> castilloResort = new HashMap<>();
-        castilloResort.put("name", "Hotel Castillo Resort");
-        castilloResort.put("rating", 4.5);
-        castilloResort.put("city", "san gil");
-        castilloResort.put("description", "Hotel Castillo Resort se encuentra en San Gil, a 42 km de Chicamocha National Park, y ofrece alojamiento con piscina al aire libre, parking privado gratis, jardín y salón de uso común.");
-        castilloResort.put("typeOfAccommodation", Map.of("dia de sol", "estadia"));
-        // 15/12/2024, al  15/01/2025
-        castilloResort.put("startDate", 20241215);
-        castilloResort.put("endDate", 20250115);
-        castilloResort.put("price", 60.0);
-        castilloResort.put("servicios", "piscina, almuerzo, wifi, refrigerio, duchas");
-        castilloResort.put("rooms", Map.of(
-                "single room", 2,
-                "double room", 6,
-                "quadruple room", 1,
-                "family room", 5,
-                "suite", 3));
-        hotels.add(castilloResort);
+            hotels[1] = new Object[]{
+                    "Mesón del Cuchicute",
+                    4.3,
+                    "San Gil, Santander",
+                    "60 confortables habitaciones, 13 confortables cabañas, 2 cabañas dúplex, zona de camping, TV por cable, cajillas de seguridad, mini bar, Wifi, room service, restaurante, taberna, bar, piscinas.",
+                    "2025-01-15",
+                    "2025-01-30",
+                    150.0,
+                    13,
+                    "Hotel",
+                    new Object[]{
+                            new Object[]{"single room", 3, 20.0, "cama individual, baño privado, aire acondicionado"},
+                            new Object[]{"double room", 5, 30.0, "2 camas dobles, vista al jardín, aire acondicionado, baño privado"},
+                            new Object[]{"quadruple room", 2, 50.0, "4 camas, aire acondicionado, baño privado, minibar"},
+                            new Object[]{"family room", 3, 45.0, "4 camas matrimoniales, sala de estar, aire acondicionado, baño privado"},
+                            new Object[]{"suite", 2, 60.0, "cama king size, sala de estar, jacuzzi, aire acondicionado, baño privado"}
+                    },
+                    new Object[]{
+                            new Object[]{"Estadía por noche", 140.0, "Acceso a habitaciones con minibar, room service, piscina y Wifi gratuito."},
+                            new Object[]{"Estadía por fines de semana", 320.0, "Incluye desayuno, servicio de bar y acceso a todas las instalaciones."},
+                            new Object[]{"Pasadía", 60.0, "Uso de piscina, zona de camping y áreas comunes durante el día."}
+                    }
+            };
 
-        Map<String, Object> mesonDeCuchicute = new HashMap<>();
+            hotels[2] = new Object[]{
+                    "Finca Sol y Luna",
+                    4.3,
+                    "San Gil",
+                    "Finca Sol y Luna se encuentra en San Gil, en la región de Santander, a 47 km de Chicamocha National Park. Ofrece alojamiento con wifi gratis, zona de barbacoa, piscina al aire libre y parking privado gratis.",
+                    "2025-02-01",
+                    "2025-03-20",
+                    350.0,
+                    5,
+                    "Finca",
+                    new Object[]{
+                            new Object[]{"single room", 1, 15.0, "cama individual, baño privado, aire acondicionado"},
+                            new Object[]{"double room", 2, 25.0, "2 camas dobles, aire acondicionado, baño privado, vista al jardín"},
+                            new Object[]{"quadruple room", 1, 45.0, "4 camas, baño privado, aire acondicionado, vista al campo"},
+                            new Object[]{"family room", 1, 35.0, "4 camas matrimoniales, sala de estar, aire acondicionado, baño privado"},
+                            new Object[]{"matrimonial", 1, 20.0, "cama matrimonial, baño privado, aire acondicionado"}
+                    },
+                    new Object[]{
+                            new Object[]{"Estadía por noche", 120.0, "Incluye barbacoa, Wifi, piscina y desayuno continental."},
+                            new Object[]{"Estadía por fines de semana", 280.0, "Acceso completo a todas las instalaciones, desayuno buffet y zona de barbacoa."},
+                            new Object[]{"Pasadía", 40.0, "Uso de piscina, barbacoa y zona de picnic."}
+                    }
+            };
 
-        mesonDeCuchicute.put("name", "Mesón del Cuchicute");
-        mesonDeCuchicute.put("rating", 4.3);
-        mesonDeCuchicute.put("city", "San Gil, Santander");
-        mesonDeCuchicute.put("description", "60 confortables habitaciones, 13 confortables cabañas, 2 cabañas dúplex, zona de camping, TV por cable, cajillas de seguridad, mini bar, Wifi, room service, restaurante, taberna, bar, piscinas.");
-        mesonDeCuchicute.put("typeOfAccommodation", "estadia");
-        // 15/01/2025 al 30/01/2025
-        mesonDeCuchicute.put("startDate", 20250115);
-        mesonDeCuchicute.put("endDate", 20250130);
-        mesonDeCuchicute.put("price", 150.0);
-        mesonDeCuchicute.put("servicios", "piscina, desayuno, almuerzo, cena, wifi, agua caliente, servicio a la habitación");
-        mesonDeCuchicute.put("rooms", Map.of(
-                "single room", 3,
-                "double room", 5,
-                "quadruple room", 2,
-                "family room", 3,
-                "suite", 2
-        ));
+            hotels[3] = new Object[]{
+                    "Hermoso Apto - C.C San Gil Plaza",
+                    4.6,
+                    "San Gil",
+                    "Hermoso Apto - C.C San Gil Plaza está en San Gil, dispone de vistas a la ciudad y wifi gratis.",
+                    "2024-12-15",
+                    "2025-01-10",
+                    70.0,
+                    4,
+                    "Apartamento",
+                    new Object[]{
+                            new Object[]{"single room", 1, 12.0, "cama individual, baño privado, aire acondicionado"},
+                            new Object[]{"double room", 2, 22.0, "2 camas dobles, aire acondicionado, baño privado, vista al mar"},
+                            new Object[]{"matrimonial", 1, 18.0, "cama matrimonial, aire acondicionado, baño privado, TV de pantalla plana"},
+                            new Object[]{"suite", 0, 40.0, "cama king size, sala de estar, aire acondicionado, jacuzzi, baño privado"},
+                            new Object[]{"family room", 0, 25.0, "4 camas matrimoniales, aire acondicionado, baño privado, minibar"}
+                    },
+                    new Object[]{
+                            new Object[]{"Estadía por noche", 80.0, "Habitación amueblada con cocina equipada, Wi-Fi y baño privado."},
+                            new Object[]{"Estadía por fines de semana", 190.0, "Incluye acceso a áreas comunes, desayuno y servicio de limpieza."},
+                            new Object[]{"Pasadía", 30.0, "Acceso al apartamento por un día sin servicios adicionales."}
+                    }
+            };
 
-        hotels.add(mesonDeCuchicute);
+            hotels[4] = new Object[]{
+                    "Aptahotel Guest House",
+                    4.5,
+                    "San Gil",
+                    "Aptahotel Guest House está en San Gil, a 41 km de Chicamocha National Park y a 41 km de Chicamocha Water Park.",
+                    "2025-01-10",
+                    "2025-01-15",
+                    90.0,
+                    4,
+                    "Apartamento",
+                    new Object[]{
+                            new Object[]{"single room", 1, 15.0, "cama individual, baño privado, aire acondicionado"},
+                            new Object[]{"double room", 2, 28.0, "2 camas dobles, aire acondicionado, baño privado"},
+                            new Object[]{"matrimonial", 1, 20.0, "cama matrimonial, aire acondicionado, baño privado"},
+                            new Object[]{"suite", 0, 45.0, "cama king size, aire acondicionado, sala de estar, baño privado"},
+                            new Object[]{"family room", 0, 30.0, "4 camas matrimoniales, aire acondicionado, baño privado, vista al campo"}
+                    },
+                    new Object[]{
+                            new Object[]{"Estadía por noche", 100.0, "Uso de Wi-Fi, acceso a zonas comunes y desayuno incluido."},
+                            new Object[]{"Estadía por fines de semana", 240.0, "Acceso completo al hotel con desayuno y servicios adicionales."},
+                            new Object[]{"Pasadía", 35.0, "Disfrute de las instalaciones durante el día."}
+                    }
+            };
 
-        Map<String, Object> fincaSolYLuna = new HashMap<>();
-
-        fincaSolYLuna.put("name", "Finca Sol y Luna");
-        fincaSolYLuna.put("rating", 4.3);
-        fincaSolYLuna.put("city", "San Gil");
-        fincaSolYLuna.put("description", "Finca Sol y Luna se encuentra en San Gil, en la región de Santander, a 47 km de Chicamocha National Park. Ofrece alojamiento con wifi gratis, zona de barbacoa, piscina al aire libre y parking privado gratis. Algunas unidades incluyen TV de pantalla plana por cable, cocina totalmente equipada con nevera y baño privado con ducha y artículos de aseo gratuitos.");
-        fincaSolYLuna.put("typeOfAccommodation", "finca");
-        //Inicio: 01/02/2025, Fin: 15/03/2025
-        fincaSolYLuna.put("startDate", 20250201);
-        fincaSolYLuna.put("endDate", 20250315);
-        fincaSolYLuna.put("price", 350.0);
-        fincaSolYLuna.put("servicios", "piscina, wifi, agua caliente");
-        fincaSolYLuna.put("rooms", Map.of(
-                "single room", 1,
-                "double room", 2,
-                "quadruple room", 1,
-                "family room", 1,
-                "matrimonial", 1));
-        hotels.add(fincaSolYLuna);
-
-        Map<String, Object> aptoSanGilPlaza = new HashMap<>();
-
-        aptoSanGilPlaza.put("name", "Hermoso Apto - C.C San Gil Plaza");
-        aptoSanGilPlaza.put("rating", 4.6);
-        aptoSanGilPlaza.put("city", "San Gil");
-        aptoSanGilPlaza.put("description", "Hermoso Apto - C.C San Gil Plaza está en San Gil, dispone de vistas a la ciudad y wifi gratis.");
-        aptoSanGilPlaza.put("typeOfAccommodation", "apartamento");
-        /* 15 de diciembre de 2024 al 1 de enero de 2025*/
-        aptoSanGilPlaza.put("startDate", 20241215);
-        aptoSanGilPlaza.put("endDate", 20250101);
-        aptoSanGilPlaza.put("price", 70.0);
-        aptoSanGilPlaza.put("servicios", "piscina, wifi, gimnasio, agua caliente");
-        aptoSanGilPlaza.put("rooms", Map.of(
-                "single room", 1,
-                "double room", 2,
-                "matrimonial", 1,
-                "suite", 0,
-                "family room", 0
-        ));
-        hotels.add(aptoSanGilPlaza);
-
-        Map<String, Object> aptahotelGuestHouse = new HashMap<>();
-
-        aptahotelGuestHouse.put("name", "Aptahotel Guest House");
-        aptahotelGuestHouse.put("rating", 4.5);
-        aptahotelGuestHouse.put("city", "san gil");
-        aptahotelGuestHouse.put("description", "Aptahotel Guest House está en San Gil, a 41 km de Chicamocha National Park y a 41 km de Chicamocha Water Park.");
-        aptahotelGuestHouse.put("typeOfAccommodation", "apartamento");
-        // 05/06/2025 a  30/07/2025
-        aptahotelGuestHouse.put("startDate", 20250605);
-        aptahotelGuestHouse.put("endDate", 20250730);
-        aptahotelGuestHouse.put("price", 90.0);
-        aptahotelGuestHouse.put("servicios", "piscina, wifi, gimnasio, agua caliente");
-        aptahotelGuestHouse.put("rooms", Map.of(
-                "single room", 1,
-                "double room", 2,
-                "matrimonial", 1,
-                "suite", 0,
-                "family room", 0));
-        hotels.add(aptahotelGuestHouse);
-
-        return hotels;
-    }
+            return hotels;
+        }
 
     public static List<Map<String, Object>> searchAvailableAccommodations(
             String city,
@@ -198,68 +240,55 @@ public class Main {
             int numberOfRooms
     ) {
 
-        List<Map<String, Object>> hotels = listOfHotels();
+        Object[] hotelsWithDetails = listOfHotels();
+
         List<Map<String, Object>> availableHotels = new ArrayList<>();
 
-        for (Map<String, Object> hotel : hotels) {
-            Object hotelCityObj = hotel.get("city");
-            String hotelCity = hotelCityObj instanceof String ? (String) hotelCityObj : null;
+        for (Object hotelObj : hotelsWithDetails) {
+            Object[] hotel = (Object[]) hotelObj;
 
-            // Tratamiento adecuado para un solo String en tipo de alojamiento
-            String hotelType = hotel.get("typeOfAccommodation") instanceof String
-                    ? (String) hotel.get("typeOfAccommodation")
-                    : null;
-
-            int hotelStartDate = hotel.get("startDate") instanceof Integer ? (int) hotel.get("startDate") : 0;
-            int hotelEndDate = hotel.get("endDate") instanceof Integer ? (int) hotel.get("endDate") : 0;
+            String hotelName = (String) hotel[0];
+            double hotelRating = (double) hotel[1];
+            String hotelCity = (String) hotel[2];
+            String hotelDescription = (String) hotel[3];
+            int[] dateRange = (int[]) hotel[4];
+            int totalRooms = (int) hotel[5];
+            int availableRooms = (int) hotel[6];
+            Object[] roomDetails = (Object[]) hotel[7];
 
             if (hotelCity != null && hotelCity.equalsIgnoreCase(city) &&
-                    hotelType != null && hotelType.equalsIgnoreCase(typeOfAccommodation) &&
-                    startDate >= hotelStartDate &&
-                    endDate <= hotelEndDate)  {
+                    typeOfAccommodation != null && typeOfAccommodation.equalsIgnoreCase(typeOfAccommodation) &&
+                    startDate >= dateRange[0] && endDate <= dateRange[1]) {
 
-                Map<String, Integer> rooms;
-
-                Object roomsObj = hotel.getOrDefault("rooms", new HashMap<>());
-
-                if (roomsObj instanceof Map<?, ?>) {
-                    rooms = new HashMap<>((Map<String, Integer>) roomsObj);
-                } else {
-                    rooms = new HashMap<>();
+                Map<String, Integer> roomMap = new HashMap<>();
+                for (Object roomDetail : roomDetails) {
+                    Object[] room = (Object[]) roomDetail;
+                    String roomType = (String) room[0];
+                    int roomCount = (int) room[1];
+                    double roomPrice = (double) room[2];
+                    roomMap.put(roomType, roomCount);
                 }
 
-
-                int singleRoomCapacity = 1;
-                int doubleRoomCapacity = 2;
-                int matrimonialRoomCapacity = 3;
-                int suiteRoomCapacity = 2;
-                int familyRoomCapacity = 6;
-
                 int totalCapacity =
-                        (singleRoomCapacity * rooms.getOrDefault("single", 0)) +
-                                (doubleRoomCapacity * rooms.getOrDefault("double", 0)) +
-                                (matrimonialRoomCapacity * rooms.getOrDefault("matrimonial", 0)) +
-                                (suiteRoomCapacity * rooms.getOrDefault("suite", 0)) +
-                                (familyRoomCapacity * rooms.getOrDefault("family", 0));
+                        roomMap.getOrDefault("single room", 0) +
+                                roomMap.getOrDefault("double room", 0) +
+                                roomMap.getOrDefault("matrimonial", 0) +
+                                roomMap.getOrDefault("suite", 0) +
+                                roomMap.getOrDefault("family room", 0);
 
                 if (totalCapacity >= (numberOfAdults + numberOfChildren) &&
-                        rooms.getOrDefault("availableRooms", 0) >= numberOfRooms) {
+                        availableRooms >= numberOfRooms) {
 
-                    double priceNight = (double) hotel.getOrDefault("price", 0.0);
-                    int daysOfStay = endDate - startDate;
-                    double totalPrice = priceNight * daysOfStay;
+                    Map<String, Object> hotelInfo = new HashMap<>();
+                    hotelInfo.put("name", hotelName);
+                    hotelInfo.put("rating", hotelRating);
+                    hotelInfo.put("description", hotelDescription);
+                    hotelInfo.put("city", hotelCity);
+                    hotelInfo.put("totalRooms", totalRooms);
+                    hotelInfo.put("availableRooms", availableRooms);
+                    hotelInfo.put("roomDetails", roomMap);
 
-                    // Aplicar descuentos o recargos según las fechas
-                    if (endDate >= hotelStartDate && endDate <= hotelEndDate) {
-                        totalPrice *= 1.15; // 15% de aumento para los últimos 5 días
-                    } else if (startDate >= hotelStartDate + 9 && startDate <= hotelStartDate + 15) {
-                        totalPrice *= 1.10; // 10% de aumento del 10 al 15 del mes
-                    } else if (startDate >= hotelStartDate + 5 && endDate <= hotelStartDate + 10) {
-                        totalPrice *= 0.92; // 8% de descuento del 5 al 10 del mes
-                    }
-
-                    hotel.put("totalPrice", totalPrice);
-                    availableHotels.add(hotel);
+                    availableHotels.add(hotelInfo);
                 }
             }
         }
@@ -274,5 +303,7 @@ public class Main {
         }
         return availableHotels;
     }
+
+
 
 }
