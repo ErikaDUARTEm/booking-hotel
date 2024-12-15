@@ -8,13 +8,14 @@ public class Main {
         while (true) {
             System.out.println("1. Listar hoteles");
             System.out.println("2. Consultar disponibilidad de fechas, habitaciones y precio");
+            System.out.println("3. Confirmar Habitaciones");
             System.out.println("4. Salir");
             int opcion = scanner.nextInt();
 
             switch (opcion) {
                 case 1 -> printDetailsHotels();
                 case 2 -> {
-                    System.out.println("Ingresa los siguientes datos: ");
+                    System.out.println("Para ver la disponibilidad de hoteles ingresa los siguientes datos: ");
                     scanner.nextLine();
 
                     System.out.println("Ciudad");
@@ -41,7 +42,38 @@ public class Main {
                     searchAvailableAccommodations(city, typeOfAccommodation, startDate, endDate, numbersAdults, numbersChildrens, numberOfRooms);
 
                 }
+                case 3 -> {
+                    System.out.println("Para confirmar habitaciones, introduce los siguientes datos: ");
+                    scanner.nextLine();
 
+                    System.out.println("Nombre del hotel: ");
+                    String hotelName = scanner.nextLine().toLowerCase();
+
+                    System.out.println("Fecha de Ingreso en formato yyyyMMdd:");
+                    int checkIn = scanner.nextInt();
+
+                    System.out.println("Fecha de salida en formato yyyyMMdd:");
+                    int checkOut = scanner.nextInt();
+
+                    System.out.println("cantidad de Adultos:");
+                    int numbersAdults = scanner.nextInt();
+
+                    System.out.println("cantidad de Niños:");
+                    int numbersChildrens = scanner.nextInt();
+
+                    System.out.println("cantidad de Habitaciones:");
+                    int roomsRequested = scanner.nextInt();
+
+                    System.out.println(hotelName);
+                    System.out.println(checkIn);
+                    System.out.println(checkOut);
+                    System.out.println(numbersAdults);
+                    System.out.println(numbersChildrens);
+                    System.out.println(roomsRequested);
+
+
+                    confirmRooms(hotelName, checkIn, checkOut, numbersAdults, numbersChildrens, roomsRequested);
+                }
                 case 4 -> {
                     System.out.println("Saliendo...");
                     return;
@@ -119,7 +151,7 @@ public class Main {
         };
 
         hotels[1] = new Object[]{
-                "Mesón del Cuchicute",
+                "Meson del Cuchicute",
                 4.3,
                 "San Gil, Santander",
                 "60 confortables habitaciones, 13 confortables cabañas, 2 cabañas dúplex, zona de camping, TV por cable, cajillas de seguridad, mini bar, Wifi, room service, restaurante, taberna, bar, piscinas.",
@@ -318,7 +350,7 @@ public class Main {
 
                                     // Construir la información para el resultado
                                     Object[] hotelInfo = new Object[4];
-                                    hotelInfo[0] = hotelData[0]; 
+                                    hotelInfo[0] = hotelData[0];
                                     hotelInfo[1] = serviceName;
                                     hotelInfo[2] = serviceDescription;
                                     hotelInfo[3] = servicePrice;
@@ -415,6 +447,61 @@ public class Main {
         return year * 365 + month * daysMonth + day;
     }
 
+    public static String confirmRooms(String hotelName, int checkIn, int checkOut, int numbersAdults, int numbersChildrens, int roomsRequested) {
+
+        Object[] allHotels = listOfHotels();
+        Object[] selectedHotel = null;
+
+        hotelName = hotelName.trim().toLowerCase();
+
+        for (Object hotel : allHotels) {
+            Object[] hotelDetails = (Object[]) hotel;
+
+            if (hotelDetails[0].toString().toLowerCase().equals(hotelName)) {
+                selectedHotel = hotelDetails;
+                break;
+            }
+        }
+
+        if (selectedHotel == null) {
+            return "Hotel no encontrado";
+        }
+
+        int hotelStartDate = (int) selectedHotel[4];
+        int hotelEndDate = (int) selectedHotel[5];
+        int availableRooms = (int) selectedHotel[7];
+        int maxCapacityPerRoom = 0;
+
+        Object[] rooms = (Object[]) selectedHotel[9];
+        for (Object room : rooms) {
+            Object[] roomDetails = (Object[]) room;
+            int roomCapacity = (int) roomDetails[1];
+            if (roomCapacity > maxCapacityPerRoom) {
+                maxCapacityPerRoom = roomCapacity;
+            }
+        }
+
+        if (checkIn >= hotelStartDate && checkOut <= hotelEndDate) {
+
+            if (roomsRequested <= availableRooms && roomsRequested * maxCapacityPerRoom >= numbersAdults + numbersChildrens) {
+                System.out.println("****************** Habitaciones confirmadas **********************");
+                System.out.println();
+                System.out.println("Cantidad " + roomsRequested + " habitaciones.");
+                System.out.println("Ingreso: " + hotelStartDate);
+                System.out.println("Salida: " + hotelEndDate);
+                System.out.println("Para: " + (numbersAdults + numbersChildrens) + " personas.");
+                System.out.println("*******************************************************************");
+                return "Habitación confirmada con éxito.";
+
+            } else {
+                System.out.println("No hay suficiente disponibilidad de habitaciones o capacidad");
+                return "No hay suficiente disponibilidad de habitaciones o capacidad";
+            }
+        } else {
+            System.out.println("Las fechas están fuera del rango de disponibilidad del hotel.");
+            return "Las fechas están fuera del rango de disponibilidad del hotel.";
+        }
+    }
 
 
 }
