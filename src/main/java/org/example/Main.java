@@ -86,9 +86,9 @@ public class Main {
         Map<String, Object> castilloResort = new HashMap<>();
         castilloResort.put("name", "Hotel Castillo Resort");
         castilloResort.put("rating", 4.5);
-        castilloResort.put("city", "San Gil, Santander");
+        castilloResort.put("city", "san gil");
         castilloResort.put("description", "Hotel Castillo Resort se encuentra en San Gil, a 42 km de Chicamocha National Park, y ofrece alojamiento con piscina al aire libre, parking privado gratis, jardín y salón de uso común.");
-        castilloResort.put("typeOfAccommodation", Map.of("dia de sol", 20, "estadia", 30));
+        castilloResort.put("typeOfAccommodation", Map.of("dia de sol", "estadia"));
         // 15/12/2024, al  15/01/2025
         castilloResort.put("startDate", 20241215);
         castilloResort.put("endDate", 20250115);
@@ -169,7 +169,7 @@ public class Main {
 
         aptahotelGuestHouse.put("name", "Aptahotel Guest House");
         aptahotelGuestHouse.put("rating", 4.5);
-        aptahotelGuestHouse.put("city", "San Gil");
+        aptahotelGuestHouse.put("city", "san gil");
         aptahotelGuestHouse.put("description", "Aptahotel Guest House está en San Gil, a 41 km de Chicamocha National Park y a 41 km de Chicamocha Water Park.");
         aptahotelGuestHouse.put("typeOfAccommodation", "apartamento");
         // 05/06/2025 a  30/07/2025
@@ -198,46 +198,61 @@ public class Main {
             int numberOfRooms
     ) {
 
-            List<Map<String, Object>> hotels = listOfHotels();
-            List<Map<String, Object>> availableHotels = new ArrayList<>();
+        List<Map<String, Object>> hotels = listOfHotels();
+        List<Map<String, Object>> availableHotels = new ArrayList<>();
 
-            for (Map<String, Object> hotel : hotels) {
-                String hotelCity = (String) hotel.get("city");
-                String hotelType = (String) hotel.get("typeOfAccommodation");
+        for (Map<String, Object> hotel : hotels) {
+            Object hotelCityObj = hotel.get("city");
+            String hotelCity = hotelCityObj instanceof String ? (String) hotelCityObj : null;
 
-                int hotelStartDate = (int) hotel.get("startDate");
-                int hotelEndDate = (int) hotel.get("endDate");
+            // Tratamiento adecuado para un solo String en tipo de alojamiento
+            String hotelType = hotel.get("typeOfAccommodation") instanceof String
+                    ? (String) hotel.get("typeOfAccommodation")
+                    : null;
 
-                int hotelRooms = (int) hotel.get("rooms");
+            int hotelStartDate = hotel.get("startDate") instanceof Integer ? (int) hotel.get("startDate") : 0;
+            int hotelEndDate = hotel.get("endDate") instanceof Integer ? (int) hotel.get("endDate") : 0;
 
-                if (hotelCity.equals(city) &&
-                        hotelType.equals(typeOfAccommodation) &&
-                        startDate >= hotelStartDate &&
-                        endDate <= hotelEndDate &&
-                        hotelRooms >= numberOfRooms) {
+            if (hotelCity != null && hotelCity.equalsIgnoreCase(city) &&
+                    hotelType != null && hotelType.equalsIgnoreCase(typeOfAccommodation) &&
+                    startDate >= hotelStartDate &&
+                    endDate <= hotelEndDate)  {
 
-                    // Cálculo de capacidad
-                    int singleRoomCapacity = 2;
-                    int doubleRoomCapacity = 4;
-                    int quadrupleRoomCapacity = 6;
-                    int familyRoomCapacity = 6;
+                Map<String, Integer> rooms;
 
-                    int totalCapacity = (singleRoomCapacity * (int) hotel.get("single room")) +
-                            (doubleRoomCapacity * (int) hotel.get("double room")) +
-                            (quadrupleRoomCapacity * (int) hotel.get("quadruple room")) +
-                            (familyRoomCapacity * (int) hotel.get("family room"));
+                Object roomsObj = hotel.getOrDefault("rooms", new HashMap<>());
 
-                    hotel.put("capacity", totalCapacity);
+                if (roomsObj instanceof Map<?, ?>) {
+                    rooms = new HashMap<>((Map<String, Integer>) roomsObj);
+                } else {
+                    rooms = new HashMap<>();
+                }
 
-                    // Cálculo del precio
-                    double priceNight = (double) hotel.get("price");
+
+                int singleRoomCapacity = 1;
+                int doubleRoomCapacity = 2;
+                int matrimonialRoomCapacity = 3;
+                int suiteRoomCapacity = 2;
+                int familyRoomCapacity = 6;
+
+                int totalCapacity =
+                        (singleRoomCapacity * rooms.getOrDefault("single", 0)) +
+                                (doubleRoomCapacity * rooms.getOrDefault("double", 0)) +
+                                (matrimonialRoomCapacity * rooms.getOrDefault("matrimonial", 0)) +
+                                (suiteRoomCapacity * rooms.getOrDefault("suite", 0)) +
+                                (familyRoomCapacity * rooms.getOrDefault("family", 0));
+
+                if (totalCapacity >= (numberOfAdults + numberOfChildren) &&
+                        rooms.getOrDefault("availableRooms", 0) >= numberOfRooms) {
+
+                    double priceNight = (double) hotel.getOrDefault("price", 0.0);
                     int daysOfStay = endDate - startDate;
+                    double totalPrice = priceNight * daysOfStay;
 
-                    double totalPrice = priceNight * daysOfStay * numberOfRooms;
-
+                    // Aplicar descuentos o recargos según las fechas
                     if (endDate >= hotelStartDate && endDate <= hotelEndDate) {
                         totalPrice *= 1.15; // 15% de aumento para los últimos 5 días
-                    } else if (startDate >= hotelStartDate && startDate <= hotelEndDate) {
+                    } else if (startDate >= hotelStartDate + 9 && startDate <= hotelStartDate + 15) {
                         totalPrice *= 1.10; // 10% de aumento del 10 al 15 del mes
                     } else if (startDate >= hotelStartDate + 5 && endDate <= hotelStartDate + 10) {
                         totalPrice *= 0.92; // 8% de descuento del 5 al 10 del mes
@@ -247,9 +262,17 @@ public class Main {
                     availableHotels.add(hotel);
                 }
             }
-
-            return availableHotels;
         }
 
+        // Imprimir los hoteles disponibles
+        if (availableHotels.isEmpty()) {
+            System.out.println("No hay hoteles disponibles para los criterios proporcionados.");
+        } else {
+            for (Map<String, Object> availableHotel : availableHotels) {
+                System.out.println("Hotel disponible: " + availableHotel.get("name") + ", Precio total: " + availableHotel.get("totalPrice"));
+            }
+        }
+        return availableHotels;
     }
+
 }
