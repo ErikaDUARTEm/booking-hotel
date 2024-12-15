@@ -37,13 +37,6 @@ public class Main {
 
                     System.out.println("cantidad de Habitaciones");
                     int numberOfRooms = scanner.nextInt();
-                    System.out.println(city);
-                    System.out.println(typeOfAccommodation);
-                    System.out.println(startDate);
-                    System.out.println(endDate);
-                    System.out.println(numbersAdults);
-                    System.out.println(numbersChildrens);
-                    System.out.println(numberOfRooms);
 
                     searchAvailableAccommodations(city, typeOfAccommodation, startDate, endDate, numbersAdults, numbersChildrens, numberOfRooms);
 
@@ -61,12 +54,10 @@ public class Main {
     }
 
     public static void printDetailsHotels() {
-
         Object[] hotels = listOfHotels();
 
         for (Object hotel : hotels) {
-            if (hotel instanceof Object[]) {
-                Object[] hotelData = (Object[]) hotel;
+            if (hotel instanceof Object[] hotelData) {
 
                 System.out.println("***********************************");
                 System.out.println("Nombre del hotel: " + hotelData[0]);
@@ -77,36 +68,32 @@ public class Main {
                 System.out.println("Disponibilidad hasta: " + hotelData[5]);
                 System.out.println("Precio: $" + hotelData[6]);
                 System.out.println("Habitaciones disponibles: " + hotelData[7]);
-                System.out.println("***********************************");
-                System.out.println("Nombre del hotel: " + hotelData[0]);
-                System.out.println("Calificación: " + hotelData[1]);
-                System.out.println("Ciudad: " + hotelData[2]);
-                System.out.println("Descripción: " + hotelData[3]);
-                System.out.println("Disponibilidad a partir de: " + hotelData[4]);
-                System.out.println("Disponibilidad hasta: " + hotelData[5]);
-                System.out.println("Precio base: $" + hotelData[6]);
-                System.out.println("Habitaciones disponibles: " + hotelData[7]);
-                System.out.println("Tipo de alojamiento: " + hotelData[8]);
 
-                // Tipos de habitaciones
-                System.out.println("Tipos de alojamiento:");
-                Object[] roomTypes = (Object[]) hotelData[9];
-                for (Object room : roomTypes) {
-                    if (room instanceof Object[] roomData) {
-                        System.out.println("  - Tipo: " + roomData[0]);
-                        System.out.println("    Capacidad: " + roomData[1] + " personas");
-                        System.out.println("    Precio adicional: $" + roomData[2]);
-                        System.out.println("    Descripción: " + roomData[3]);
-                    }
+                if (hotelData.length > 8) {  // Verificación para asegurar que el tipo de alojamiento exista
+                    System.out.println("Tipo de alojamiento: " + hotelData[8]);
                 }
 
+                // Tipos de habitaciones
+                if (hotelData.length > 9) {  // Verificación para tipos de habitaciones
+                    System.out.println("Tipos de alojamiento:");
+                    Object[] roomTypes = (Object[]) hotelData[9];
+                    for (Object room : roomTypes) {
+                        if (room instanceof Object[] roomData) {
+                            System.out.println("  - Tipo: " + roomData[0]);
+                            System.out.println("    Capacidad: " + roomData[1] + " personas");
+                            System.out.println("    Precio adicional: $" + roomData[2]);
+                            System.out.println("    Descripción: " + roomData[3]);
+                        }
+                    }
+                }
                 System.out.println("***********************************");
             }
         }
     }
 
+
     public static Object[] listOfHotels() {
-        Object[] hotels = new Object[5];
+        Object[] hotels = new Object[6];
         hotels[0] = new Object[]{
                 "Hotel Castillo Resort",
                 4.5,
@@ -223,7 +210,30 @@ public class Main {
                 new Object[]{
                         new Object[]{"Estadía por noche", 138.0, "Uso de Wi-Fi, acceso a zonas comunes y desayuno incluido."},
                         new Object[]{"Estadía por fines de semana", 240.0, "Acceso completo al hotel con desayuno y servicios adicionales."},
-                        new Object[]{"Pasadía", 35.0, "Disfrute de las instalaciones durante el día."}
+                        new Object[]{"dia de sol", 35.0, "Disfrute de las instalaciones durante el día."}
+                }
+        };
+        hotels[5] = new Object[]{
+                "Mesón del Cuchicute",
+                4.3,
+                "San Gil, Santander",
+                "60 confortables habitaciones, 13 confortables cabañas, 2 cabañas dúplex, zona de camping, TV por cable, cajillas de seguridad, mini bar, Wifi, room service, restaurante, taberna, bar, piscinas.",
+                20241220,
+                20241230,
+                60.0,
+                13,
+                "dia de sol",
+                new Object[]{
+                        new Object[]{"single room", 1, 60.0, "cama individual, baño privado, aire acondicionado"},
+                        new Object[]{"double room", 4, 100.0, "2 camas dobles, vista al jardín, aire acondicionado, baño privado"},
+                        new Object[]{"quadruple room", 4, 150.0, "4 camas, aire acondicionado, baño privado, minibar"},
+                        new Object[]{"family room", 8, 180.0, "4 camas matrimoniales, sala de estar, aire acondicionado, baño privado"},
+                        new Object[]{"suite", 2, 200.0, "cama king size, sala de estar, jacuzzi, aire acondicionado, baño privado"}
+                },
+                new Object[]{
+                        new Object[]{"Estadía por noche", 140.0, "Acceso a habitaciones con minibar, room service, piscina y Wifi gratuito."},
+                        new Object[]{"Estadía por fines de semana", 320.0, "Incluye desayuno, servicio de bar y acceso a todas las instalaciones."},
+                        new Object[]{"Dia de sol", 60.0, "Uso de piscina, zona de camping y áreas comunes durante el día."}
                 }
         };
 
@@ -292,45 +302,65 @@ public class Main {
                 int hotelStartDate = (int) hotelData[4];
                 int hotelEndDate = (int) hotelData[5];
                 String hotelType = ((String) hotelData[8]).toLowerCase();
-                int availableRooms = (int) hotelData[7];
                 double basePrice = (double) hotelData[6];
 
-                // Validar disponibilidad antes de calcular precios
-                if (hotelCity.contains(city) && hotelType.equals(typeOfAccommodation) &&
-                        availableRooms >= numberOfRooms &&
-                        startDate <= hotelEndDate && endDate >= hotelStartDate) {
 
-                    Map<String, Integer> roomMap = createRoomMap(hotelData[9]);
-                    int totalCapacity = 0;
+                if (hotelCity.contains(city.toLowerCase()) && hotelType.equals(typeOfAccommodation)) {
+                    if ("dia de sol".equals(hotelType)) {
+                        // Extraer servicios específicos para "día de sol"
+                        Object[] dayPassInfo = (Object[]) hotelData[10]; // Servicios de "día de sol"
+                        for (Object service : dayPassInfo) {
+                            if (service instanceof Object[] serviceData) {
+                                String serviceName = (String) serviceData[0];
+                                if ("Dia de sol".equalsIgnoreCase(serviceName)) {
+                                    double servicePrice = (double) serviceData[1];
+                                    String serviceDescription = (String) serviceData[2];
 
-                    for (Integer capacity : roomMap.values()) {
-                        totalCapacity += capacity;
-                    }
+                                    // Construir la información para el resultado
+                                    Object[] hotelInfo = new Object[4];
+                                    hotelInfo[0] = hotelData[0]; 
+                                    hotelInfo[1] = serviceName;
+                                    hotelInfo[2] = serviceDescription;
+                                    hotelInfo[3] = servicePrice;
 
-                    if (totalCapacity >= (numberOfAdults + numberOfChildren)) {
-                        // Calcular precio total
-                        int totalDays = calculateDays(startDate, endDate) + 1;
-                        double totalPrice = basePrice * totalDays * numberOfRooms;
-                        double adjustment = calculateAdjustment(startDate, endDate, totalPrice);
+                                    availableHotels.add(hotelInfo);
+                                }
+                            }
+                        }
+                    } else {
+                        // Lógica para otros tipos de alojamiento
+                        int availableRooms = (int) hotelData[7];
 
-                        System.out.println(totalDays);
-                        System.out.println(basePrice);
-                        System.out.println(totalPrice );
-                        System.out.println(adjustment);
+                        if (availableRooms >= numberOfRooms &&
+                                startDate <= hotelEndDate && endDate >= hotelStartDate) {
 
-                        Object[] hotelInfo = new Object[10];
-                        hotelInfo[0] = hotelData[0];
-                        hotelInfo[1] = hotelData[1];
-                        hotelInfo[2] = hotelData[3];
-                        hotelInfo[3] = hotelCity;
-                        hotelInfo[4] = numberOfRooms;
-                        hotelInfo[5] = availableRooms;
-                        hotelInfo[6] = roomMap;
-                        hotelInfo[7] = basePrice;
-                        hotelInfo[8] = adjustment;
-                        hotelInfo[9] = adjustment;
+                            Map<String, Integer> roomMap = createRoomMap(hotelData[9]);
+                            int totalCapacity = 0;
 
-                        availableHotels.add(hotelInfo);
+                            for (Integer capacity : roomMap.values()) {
+                                totalCapacity += capacity;
+                            }
+
+                            if (totalCapacity >= (numberOfAdults + numberOfChildren)) {
+                                int totalDays = calculateDays(startDate, endDate) + 1;
+                                double totalPrice = basePrice * totalDays * numberOfRooms;
+                                double adjustment = calculateAdjustment(startDate, endDate, totalPrice);
+
+                                Object[] hotelInfo = new Object[10];
+                                hotelInfo[0] = hotelData[0];
+                                hotelInfo[1] = hotelData[1];
+                                hotelInfo[2] = hotelData[3];
+                                hotelInfo[3] = hotelCity;
+                                hotelInfo[4] = numberOfRooms;
+                                hotelInfo[5] = availableRooms;
+                                hotelInfo[6] = roomMap;
+                                hotelInfo[7] = basePrice;
+                                hotelInfo[8] = adjustment;
+                                hotelInfo[9] = adjustment;
+
+                                availableHotels.add(hotelInfo);
+                            }
+                        }
                     }
                 }
             }
@@ -340,7 +370,21 @@ public class Main {
             System.out.println("No hay hoteles disponibles para los criterios proporcionados.");
         } else {
             for (Object[] hotel : availableHotels) {
-                System.out.println("Hotel disponible: " + hotel[0] + ", Precio total: " + hotel[9]);
+                if (hotel.length == 4) { // Día de sol
+                    System.out.println("************** Hoteles disponibles **********************");
+                    System.out.println("Nombre " + hotel[0] +
+                            ", Servicio: " + hotel[1] +
+                            ", Descripción: " + hotel[2] +
+                            ", Precio: " + hotel[3]);
+                    System.out.println("****************************************************");
+                } else { // Otros alojamientos
+                    System.out.println("************** Hoteles disponibles **********************");
+                    System.out.println("Nombre: " + hotel[0] +
+                            ", Calificación: " + hotel[1] +
+                            ", Precio por noche: " + hotel[7] +
+                            ", Precio total: " + hotel[9]);
+                    System.out.println("****************************************************");
+                }
             }
         }
 
