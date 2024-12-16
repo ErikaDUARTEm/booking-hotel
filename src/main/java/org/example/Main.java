@@ -477,32 +477,42 @@ public class Main {
         Object[] rooms = (Object[]) selectedHotel[9];
         System.out.println("****************** Confirmación de Habitaciones **********************");
 
-        for (Object room : rooms) {
-            Object[] roomDetails = (Object[]) room;
+        for (int i = 0; i < rooms.length; i++) {
+            Object[] roomDetails = (Object[]) rooms[i];
 
             int roomCapacity = (int) roomDetails[1]; // Capacidad de la habitación
             int totalCapacityNeeded = numbersAdults + numbersChildrens;
 
             if (roomCapacity >= totalCapacityNeeded) {
-                System.out.println("Tipo de habitación: " + roomDetails[0]);
+                System.out.println((i + 1) + ". Tipo de habitación: " + roomDetails[0]);
                 System.out.println("Características: " + roomDetails[3]);
                 System.out.println("Precio por noche: " + roomDetails[2]);
                 System.out.println();
             }
         }
 
-        if (roomsRequested <= availableRooms) {
-            System.out.println("Cantidad " + roomsRequested + " habitaciones.");
-            System.out.println("Ingreso: " + hotelStartDate);
-            System.out.println("Salida: " + hotelEndDate);
-            System.out.println("Para: " + (numbersAdults + numbersChildrens) + " personas.");
-            System.out.println("***********************************************************************");
-            return "Habitación(s) confirmada(s) con éxito.";
+        System.out.print("Selecciona el número de la habitación deseada: ");
+        int selectedOption = new Scanner(System.in).nextInt();
+
+        if (selectedOption > 0 && selectedOption <= rooms.length) {
+            Object[] selectedRoom = (Object[]) rooms[selectedOption - 1];
+            System.out.println("Excelente elección. ¿Deseas reservar? (1 para sí, 2 para no): ");
+            int confirmation = new Scanner(System.in).nextInt();
+
+            if (confirmation == 1) {
+                System.out.println("Para reservar completa los siguientes datos: ");
+                return "Para reservar llena los siguientes datos:";
+            } else if (confirmation == 2) {
+                System.out.println("Gracias por tu visita.");
+                return "Reserva cancelada.";
+            } else {
+                return "Opción inválida.";
+            }
         } else {
-            System.out.println("No hay suficiente disponibilidad de habitaciones.");
-            return "No hay suficiente disponibilidad de habitaciones.";
+            return "Opción inválida.";
         }
     }
+
 
 
 }
