@@ -70,7 +70,10 @@ public class Main {
 
                     confirmRooms(hotelName, checkIn, checkOut, numbersAdults, numbersChildrens, roomsRequested);
                 }
-                case 4 -> {
+                case 4 ->{
+                }
+
+                case 5 -> {
                     System.out.println("Saliendo...");
                     return;
                 }
@@ -143,7 +146,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 50.0, "Habitación equipada con servicios básicos como Wi-Fi, aire acondicionado, baño privado."},
                         new Object[]{"Estadía por fines de semana", 250.0, "Ofrece servicios como desayuno buffet, acceso a piscina y uso de áreas comunes."},
                         new Object[]{"Dia de sol", 50.0, "Acceso por un día con servicios básicos y acceso a áreas comunes."}
-                }
+                },
+                new Object[100]
         };
 
         hotels[1] = new Object[]{
@@ -167,7 +171,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 140.0, "Acceso a habitaciones con minibar, room service, piscina y Wifi gratuito."},
                         new Object[]{"Estadía por fines de semana", 320.0, "Incluye desayuno, servicio de bar y acceso a todas las instalaciones."},
                         new Object[]{"Dia de sol", 60.0, "Uso de piscina, zona de camping y áreas comunes durante el día."}
-                }
+                },
+                new Object[100]
         };
 
         hotels[2] = new Object[]{
@@ -191,7 +196,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 120.0, "Incluye barbacoa, Wifi, piscina y desayuno continental."},
                         new Object[]{"Estadía por fines de semana", 280.0, "Acceso completo a todas las instalaciones, desayuno buffet y zona de barbacoa."},
                         new Object[]{"Pasadía", 40.0, "Uso de piscina, barbacoa y zona de picnic."}
-                }
+                },
+                new Object[100]
         };
 
         hotels[3] = new Object[]{
@@ -215,7 +221,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 117.0, "Habitación amueblada con cocina equipada, Wi-Fi y baño privado."},
                         new Object[]{"Estadía por fines de semana", 190.0, "Incluye acceso a áreas comunes, desayuno y servicio de limpieza."},
                         new Object[]{"Pasadía", 30.0, "Acceso al apartamento por un día sin servicios adicionales."}
-                }
+                },
+                new Object[100]
         };
 
         hotels[4] = new Object[]{
@@ -239,7 +246,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 138.0, "Uso de Wi-Fi, acceso a zonas comunes y desayuno incluido."},
                         new Object[]{"Estadía por fines de semana", 240.0, "Acceso completo al hotel con desayuno y servicios adicionales."},
                         new Object[]{"dia de sol", 35.0, "Disfrute de las instalaciones durante el día."}
-                }
+                },
+                new Object[100]
         };
         hotels[5] = new Object[]{
                 "Mesón del Cuchicute",
@@ -262,7 +270,13 @@ public class Main {
                         new Object[]{"Estadía por noche", 140.0, "Acceso a habitaciones con minibar, room service, piscina y Wifi gratuito."},
                         new Object[]{"Estadía por fines de semana", 320.0, "Incluye desayuno, servicio de bar y acceso a todas las instalaciones."},
                         new Object[]{"Dia de sol", 60.0, "Uso de piscina, zona de camping y áreas comunes durante el día."}
-                }
+                },
+                new Object[]{
+                        new Object[]{"Estadía por noche", 50.0, "Habitación equipada con servicios básicos como Wi-Fi, aire acondicionado, baño privado."},
+                        new Object[]{"Estadía por fines de semana", 250.0, "Ofrece servicios como desayuno buffet, acceso a piscina y uso de áreas comunes."},
+                        new Object[]{"Dia de sol", 50.0, "Acceso por un día con servicios básicos y acceso a áreas comunes."}
+                },
+                new Object[100]
         };
 
         return hotels;
