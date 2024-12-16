@@ -543,7 +543,7 @@ public class Main {
         selectedHotel[7] = availableRooms - 1;
 
         // confirmación de reserva
-
+        System.out.println( availableRooms);
         System.out.println("*********************  ¡Reserva realizada con éxito! ***********************");
         System.out.println("Datos del cliente:");
         System.out.println("Nombre: " + name + " " + lastName);
@@ -553,6 +553,7 @@ public class Main {
         System.out.println("Hora de llegada: " + arrivalTime);
         System.out.println("Hotel: " + selectedHotel[0]);
         System.out.println("Tipo de habitación: " + roomType[0]);
+        System.out.println( selectedHotel[7]);
         System.out.println("*********************  ¡Te esperamos pronto!  ******************************");
 
         // Retorna mensaje de confirmación
