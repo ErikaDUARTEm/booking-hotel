@@ -446,6 +446,7 @@ public class Main {
         int daysMonth = 30;
         return year * 365 + month * daysMonth + day;
     }
+
     public static String confirmRooms(String hotelName, int checkIn, int checkOut, int numbersAdults, int numbersChildrens, int roomsRequested) {
 
         Object[] allHotels = listOfHotels();
@@ -468,7 +469,6 @@ public class Main {
 
         int hotelStartDate = (int) selectedHotel[4];
         int hotelEndDate = (int) selectedHotel[5];
-        int availableRooms = (int) selectedHotel[7];
 
         if (checkIn < hotelStartDate || checkOut > hotelEndDate) {
             return "Las fechas están fuera del rango de disponibilidad del hotel.";
@@ -501,6 +501,21 @@ public class Main {
 
             if (confirmation == 1) {
                 System.out.println("Para reservar completa los siguientes datos: ");
+                System.out.println("Nombre: ");
+                String name = new Scanner(System.in).nextLine();
+                System.out.println("Apellido: ");
+                String lastName = new Scanner(System.in).nextLine();
+                System.out.println("Email: ");
+                String email = new Scanner(System.in).nextLine();
+                System.out.println("Nationality: ");
+                String nationality = new Scanner(System.in).nextLine();
+                System.out.println("Phone: ");
+                String phone = new Scanner(System.in).nextLine();
+                System.out.println("arrivalTime: ");
+                String arrivalTime = new Scanner(System.in).nextLine();
+
+
+                makeReservation(name, lastName, email, nationality, phone, arrivalTime, selectedHotel, selectedRoom);
                 return "Para reservar llena los siguientes datos:";
             } else if (confirmation == 2) {
                 System.out.println("Gracias por tu visita.");
@@ -513,6 +528,36 @@ public class Main {
         }
     }
 
+    public static String makeReservation(
+            String name,
+            String lastName,
+            String email,
+            String nationality,
+            String phone,
+            String arrivalTime,
+            Object[] selectedHotel,
+            Object[] roomType
+    ) {
+        // Se resta la habitación reservada a la lista de habitaciones disponibles en el hotel
+        int availableRooms = (int) selectedHotel[7];
+        selectedHotel[7] = availableRooms - 1;
+
+        // confirmación de reserva
+
+        System.out.println("*********************  ¡Reserva realizada con éxito! ***********************");
+        System.out.println("Datos del cliente:");
+        System.out.println("Nombre: " + name + " " + lastName);
+        System.out.println("Email: " + email);
+        System.out.println("Nacionalidad: " + nationality);
+        System.out.println("Teléfono: " + phone);
+        System.out.println("Hora de llegada: " + arrivalTime);
+        System.out.println("Hotel: " + selectedHotel[0]);
+        System.out.println("Tipo de habitación: " + roomType[0]);
+        System.out.println("*********************  ¡Te esperamos pronto!  ******************************");
+
+        // Retorna mensaje de confirmación
+        return "Reserva confirmada para el hotel " + selectedHotel[0] + " en una habitación " + roomType[0] + ".";
+    }
 
 
 }
