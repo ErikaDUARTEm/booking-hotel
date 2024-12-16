@@ -292,27 +292,7 @@ public class Main {
         return adjustment;
     }
 
-    private static Map<String, Integer> createRoomMap(Object hotel) {
-        Map<String, Integer> roomMap = new HashMap<>();
-        if (hotel instanceof Object[] roomDetails) {
-            for (Object roomDetail : roomDetails) {
-                if (roomDetail instanceof Object[] room) {
-                    if (room.length >= 2) {
-                        Object roomType = room[0];
-                        Object roomCount = room[1];
-
-                        // Validación antes de convertir
-                        if (roomType instanceof String && roomCount instanceof Integer) {
-                            roomMap.put((String) roomType, (Integer) roomCount);
-                        }
-                    }
-                }
-            }
-        }
-        return roomMap;
-    }
-
-    public static List<Object[]> searchAvailableAccommodations(
+        public static List<Object[]> searchAvailableAccommodations(
             String city,
             String typeOfAccommodation,
             int startDate,
@@ -362,11 +342,21 @@ public class Main {
                         if (availableRooms >= numberOfRooms &&
                                 startDate <= hotelEndDate && endDate >= hotelStartDate) {
 
-                            Map<String, Integer> roomMap = createRoomMap(hotelData[9]);
                             int totalCapacity = 0;
+                            Object[] roomDetails = (Object[]) hotelData[9];
 
-                            for (Integer capacity : roomMap.values()) {
-                                totalCapacity += capacity;
+                            for (Object roomDetail : roomDetails) {
+                                if (roomDetail instanceof Object[] room) {
+                                    if (room.length >= 2) {
+                                        Object roomType = room[0];
+                                        Object roomCount = room[1];
+
+                                        // Validación antes de convertir
+                                        if (roomType instanceof String && roomCount instanceof Integer) {
+                                            totalCapacity += (Integer) roomCount;
+                                        }
+                                    }
+                                }
                             }
 
                             if (totalCapacity >= (numberOfAdults + numberOfChildren)) {
@@ -381,7 +371,7 @@ public class Main {
                                 hotelInfo[3] = hotelCity;
                                 hotelInfo[4] = numberOfRooms;
                                 hotelInfo[5] = availableRooms;
-                                hotelInfo[6] = roomMap;
+                                hotelInfo[6] = hotelData[9];
                                 hotelInfo[7] = basePrice;
                                 hotelInfo[8] = adjustment;
                                 hotelInfo[9] = adjustment;
