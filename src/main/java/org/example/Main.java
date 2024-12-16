@@ -306,7 +306,9 @@ public class Main {
         return adjustment;
     }
 
-        public static List<Object[]> searchAvailableAccommodations(
+
+    public static List<Object[]> searchAvailableAccommodations(
+
             String city,
             String typeOfAccommodation,
             int startDate,
@@ -357,6 +359,7 @@ public class Main {
                                 startDate <= hotelEndDate && endDate >= hotelStartDate) {
 
                             int totalCapacity = 0;
+
                             Object[] roomDetails = (Object[]) hotelData[9];
 
                             for (Object roomDetail : roomDetails) {
@@ -386,6 +389,7 @@ public class Main {
                                 hotelInfo[4] = numberOfRooms;
                                 hotelInfo[5] = availableRooms;
                                 hotelInfo[6] = hotelData[9];
+                                hotelInfo[6] =  hotelData[9];
                                 hotelInfo[7] = basePrice;
                                 hotelInfo[8] = adjustment;
                                 hotelInfo[9] = adjustment;
