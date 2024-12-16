@@ -6,10 +6,14 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("1. Listar hoteles");
-            System.out.println("2. Consultar disponibilidad de fechas, habitaciones y precio");
-            System.out.println("3. Confirmar Habitaciones");
-            System.out.println("4. Salir");
+            System.out.println("********************************");
+            System.out.println("1. Listar hoteles.");
+            System.out.println("2. Consultar disponibilidad de fechas, habitaciones y precio.");
+            System.out.println("3. Confirmar Habitaciones.");
+            System.out.println("4. Ver Reserva.");
+            System.out.println("5. Salir.");
+            System.out.println("********************************");
+
             int opcion = scanner.nextInt();
 
             switch (opcion) {
@@ -64,17 +68,12 @@ public class Main {
                     System.out.println("cantidad de Habitaciones:");
                     int roomsRequested = scanner.nextInt();
 
-                    System.out.println(hotelName);
-                    System.out.println(checkIn);
-                    System.out.println(checkOut);
-                    System.out.println(numbersAdults);
-                    System.out.println(numbersChildrens);
-                    System.out.println(roomsRequested);
-
-
                     confirmRooms(hotelName, checkIn, checkOut, numbersAdults, numbersChildrens, roomsRequested);
                 }
-                case 4 -> {
+                case 4 ->{
+                }
+
+                case 5 -> {
                     System.out.println("Saliendo...");
                     return;
                 }
@@ -147,7 +146,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 50.0, "Habitación equipada con servicios básicos como Wi-Fi, aire acondicionado, baño privado."},
                         new Object[]{"Estadía por fines de semana", 250.0, "Ofrece servicios como desayuno buffet, acceso a piscina y uso de áreas comunes."},
                         new Object[]{"Dia de sol", 50.0, "Acceso por un día con servicios básicos y acceso a áreas comunes."}
-                }
+                },
+                new Object[100]
         };
 
         hotels[1] = new Object[]{
@@ -171,7 +171,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 140.0, "Acceso a habitaciones con minibar, room service, piscina y Wifi gratuito."},
                         new Object[]{"Estadía por fines de semana", 320.0, "Incluye desayuno, servicio de bar y acceso a todas las instalaciones."},
                         new Object[]{"Dia de sol", 60.0, "Uso de piscina, zona de camping y áreas comunes durante el día."}
-                }
+                },
+                new Object[100]
         };
 
         hotels[2] = new Object[]{
@@ -195,7 +196,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 120.0, "Incluye barbacoa, Wifi, piscina y desayuno continental."},
                         new Object[]{"Estadía por fines de semana", 280.0, "Acceso completo a todas las instalaciones, desayuno buffet y zona de barbacoa."},
                         new Object[]{"Pasadía", 40.0, "Uso de piscina, barbacoa y zona de picnic."}
-                }
+                },
+                new Object[100]
         };
 
         hotels[3] = new Object[]{
@@ -219,7 +221,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 117.0, "Habitación amueblada con cocina equipada, Wi-Fi y baño privado."},
                         new Object[]{"Estadía por fines de semana", 190.0, "Incluye acceso a áreas comunes, desayuno y servicio de limpieza."},
                         new Object[]{"Pasadía", 30.0, "Acceso al apartamento por un día sin servicios adicionales."}
-                }
+                },
+                new Object[100]
         };
 
         hotels[4] = new Object[]{
@@ -243,7 +246,8 @@ public class Main {
                         new Object[]{"Estadía por noche", 138.0, "Uso de Wi-Fi, acceso a zonas comunes y desayuno incluido."},
                         new Object[]{"Estadía por fines de semana", 240.0, "Acceso completo al hotel con desayuno y servicios adicionales."},
                         new Object[]{"dia de sol", 35.0, "Disfrute de las instalaciones durante el día."}
-                }
+                },
+                new Object[100]
         };
         hotels[5] = new Object[]{
                 "Mesón del Cuchicute",
@@ -266,7 +270,13 @@ public class Main {
                         new Object[]{"Estadía por noche", 140.0, "Acceso a habitaciones con minibar, room service, piscina y Wifi gratuito."},
                         new Object[]{"Estadía por fines de semana", 320.0, "Incluye desayuno, servicio de bar y acceso a todas las instalaciones."},
                         new Object[]{"Dia de sol", 60.0, "Uso de piscina, zona de camping y áreas comunes durante el día."}
-                }
+                },
+                new Object[]{
+                        new Object[]{"Estadía por noche", 50.0, "Habitación equipada con servicios básicos como Wi-Fi, aire acondicionado, baño privado."},
+                        new Object[]{"Estadía por fines de semana", 250.0, "Ofrece servicios como desayuno buffet, acceso a piscina y uso de áreas comunes."},
+                        new Object[]{"Dia de sol", 50.0, "Acceso por un día con servicios básicos y acceso a áreas comunes."}
+                },
+                new Object[100]
         };
 
         return hotels;
@@ -296,7 +306,9 @@ public class Main {
         return adjustment;
     }
 
+
     public static List<Object[]> searchAvailableAccommodations(
+
             String city,
             String typeOfAccommodation,
             int startDate,
@@ -376,6 +388,7 @@ public class Main {
                                 hotelInfo[3] = hotelCity;
                                 hotelInfo[4] = numberOfRooms;
                                 hotelInfo[5] = availableRooms;
+                                hotelInfo[6] = hotelData[9];
                                 hotelInfo[6] =  hotelData[9];
                                 hotelInfo[7] = basePrice;
                                 hotelInfo[8] = adjustment;
@@ -438,7 +451,7 @@ public class Main {
         return year * 365 + month * daysMonth + day;
     }
 
-    public static String confirmRooms(String hotelName, int checkIn, int checkOut, int numbersAdults, int numbersChildrens, int roomsRequested) {
+    public static void confirmRooms(String hotelName, int checkIn, int checkOut, int numbersAdults, int numbersChildrens, int roomsRequested) {
 
         Object[] allHotels = listOfHotels();
         Object[] selectedHotel = null;
@@ -455,67 +468,118 @@ public class Main {
         }
 
         if (selectedHotel == null) {
-            return "Hotel no encontrado";
+            System.out.println("Hotel no encontrado");
         }
+        int hotelStartDate = 1;
+        int hotelEndDate = 1;
 
-        int hotelStartDate = (int) selectedHotel[4];
-        int hotelEndDate = (int) selectedHotel[5];
+        if (selectedHotel != null && selectedHotel.length > 4) {
+            hotelStartDate = (int) selectedHotel[4];
+            hotelEndDate = (int) selectedHotel[5];
+        }
 
         if (checkIn < hotelStartDate || checkOut > hotelEndDate) {
-            return "Las fechas están fuera del rango de disponibilidad del hotel.";
+            System.out.println("Las fechas están fuera del rango de disponibilidad del hotel.");
         }
 
-        Object[] rooms = (Object[]) selectedHotel[9];
+        Object[] rooms = null;
+        if (selectedHotel != null) {
+            rooms = (Object[]) selectedHotel[9];
+        }
         System.out.println("****************** Confirmación de Habitaciones **********************");
 
-        for (int i = 0; i < rooms.length; i++) {
-            Object[] roomDetails = (Object[]) rooms[i];
+        if (rooms != null) {
+            for (int i = 0; i < rooms.length; i++) {
+                Object[] roomDetails = (Object[]) rooms[i];
 
-            int roomCapacity = (int) roomDetails[1]; // Capacidad de la habitación
-            int totalCapacityNeeded = numbersAdults + numbersChildrens;
+                int roomCapacity = (int) roomDetails[1];
+                int totalCapacityNeeded = numbersAdults + numbersChildrens;
 
-            if (roomCapacity >= totalCapacityNeeded) {
-                System.out.println((i + 1) + ". Tipo de habitación: " + roomDetails[0]);
-                System.out.println("Características: " + roomDetails[3]);
-                System.out.println("Precio por noche: " + roomDetails[2]);
-                System.out.println();
+                if (roomCapacity >= totalCapacityNeeded) {
+                    System.out.println((i + 1) + ". Tipo de habitación: " + roomDetails[0]);
+                    System.out.println("Características: " + roomDetails[3]);
+                    System.out.println("Precio por noche: " + roomDetails[2]);
+                    System.out.println();
+                }
             }
         }
 
         System.out.print("Selecciona el número de la habitación deseada: ");
-        int selectedOption = new Scanner(System.in).nextInt();
+        Scanner scanner = new Scanner(System.in);
+        int selectedOption = scanner.nextInt();
 
-        if (selectedOption > 0 && selectedOption <= rooms.length) {
+        if (rooms != null && selectedOption > 0 && selectedOption <= rooms.length) {
             Object[] selectedRoom = (Object[]) rooms[selectedOption - 1];
             System.out.println("Excelente elección. ¿Deseas reservar? (1 para sí, 2 para no): ");
-            int confirmation = new Scanner(System.in).nextInt();
+            int confirmation = scanner.nextInt();
 
             if (confirmation == 1) {
                 System.out.println("Para reservar completa los siguientes datos: ");
-                System.out.println("Nombre: ");
-                String name = new Scanner(System.in).nextLine();
-                System.out.println("Apellido: ");
-                String lastName = new Scanner(System.in).nextLine();
-                System.out.println("Email: ");
-                String email = new Scanner(System.in).nextLine();
-                System.out.println("Nationality: ");
-                String nationality = new Scanner(System.in).nextLine();
-                System.out.println("Phone: ");
-                String phone = new Scanner(System.in).nextLine();
-                System.out.println("arrivalTime: ");
-                String arrivalTime = new Scanner(System.in).nextLine();
+                scanner.nextLine();
 
+                String name;
+                String lastName;
+                String email;
+                String nationality;
+                String phone;
+                String arrivalTime;
 
+                // Usar un bucle do-while para validar cada campo hasta que todos sean correctos
+                do {
+                    System.out.println("Nombre: ");
+                    name = scanner.nextLine().trim();
+                    if (name.isEmpty()) {
+                        System.out.println("El nombre no puede estar vacío. Por favor ingrésalo nuevamente.");
+                    }
+                } while (name.isEmpty());
+
+                do {
+                    System.out.println("Apellido: ");
+                    lastName = scanner.nextLine().trim();
+                    if (lastName.isEmpty()) {
+                        System.out.println("El apellido no puede estar vacío. Por favor ingrésalo nuevamente.");
+                    }
+                } while (lastName.isEmpty());
+
+                do {
+                    System.out.println("Email: ");
+                    email = scanner.nextLine().trim();
+                    if (email.isEmpty()) {
+                        System.out.println("El email no puede estar vacío. Por favor ingrésalo nuevamente.");
+                    }
+                } while (email.isEmpty());
+
+                do {
+                    System.out.println("Nacionalidad: ");
+                    nationality = scanner.nextLine().trim();
+                    if (nationality.isEmpty()) {
+                        System.out.println("La nacionalidad no puede estar vacía. Por favor ingrésala nuevamente.");
+                    }
+                } while (nationality.isEmpty());
+
+                do {
+                    System.out.println("Teléfono: ");
+                    phone = scanner.nextLine().trim();
+                    if (phone.isEmpty()) {
+                        System.out.println("El teléfono no puede estar vacío. Por favor ingrésalo nuevamente.");
+                    }
+                } while (phone.isEmpty());
+
+                do {
+                    System.out.println("Hora de llegada: ");
+                    arrivalTime = scanner.nextLine().trim();
+                    if (arrivalTime.isEmpty()) {
+                        System.out.println("La hora de llegada no puede estar vacía. Por favor ingrésala nuevamente.");
+                    }
+                } while (arrivalTime.isEmpty());
                 makeReservation(name, lastName, email, nationality, phone, arrivalTime, selectedHotel, selectedRoom);
-                return "Para reservar llena los siguientes datos:";
+
             } else if (confirmation == 2) {
-                System.out.println("Gracias por tu visita.");
-                return "Reserva cancelada.";
+                System.out.println("Reserva cancelada, Gracias por tu visita.");
             } else {
-                return "Opción inválida.";
+                System.out.println("Opción inválida.");
+
             }
-        } else {
-            return "Opción inválida.";
         }
     }
 
