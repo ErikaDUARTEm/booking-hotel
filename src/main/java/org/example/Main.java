@@ -10,7 +10,7 @@ public class Main {
             System.out.println("1. Listar hoteles.");
             System.out.println("2. Consultar disponibilidad de fechas, habitaciones y precio.");
             System.out.println("3. Confirmar Habitaciones.");
-            System.out.println("4. Ver Reserva.");
+            //System.out.println("4. Ver Reserva.");
             System.out.println("5. Salir.");
             System.out.println("********************************");
 
@@ -105,7 +105,7 @@ public class Main {
                 }
 
                 // Tipos de habitaciones
-                if (hotelData.length > 9) {  // Verificación para tipos de habitaciones
+                if (hotelData.length > 9) {
                     System.out.println("Tipos de alojamiento:");
                     Object[] roomTypes = (Object[]) hotelData[9];
                     for (Object room : roomTypes) {
