@@ -296,6 +296,7 @@ public class Main {
         return adjustment;
     }
 
+
     public static List<Object[]> searchAvailableAccommodations(
             String city,
             String typeOfAccommodation,
